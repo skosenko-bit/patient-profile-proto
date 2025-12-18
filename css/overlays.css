@@ -1,0 +1,121 @@
+/* Modal */
+.modalOverlay{
+  position:fixed;
+  inset:0;
+  background: rgba(15,23,42,.45);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding: 16px;
+  z-index: 200;
+}
+.modalOverlay.open{display:flex;}
+.modal{
+  width: min(520px, 100%);
+  background:#fff;
+  border-radius: 18px;
+  border:1px solid var(--line);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+.modalH{
+  padding: 14px 16px;
+  border-bottom:1px solid var(--line);
+  background: var(--soft);
+}
+.modalH h3{
+  margin:0;
+  font-size: 15px;
+}
+.modalB{
+  padding: 14px 16px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.modalF{
+  padding: 14px 16px;
+  border-top:1px solid var(--line);
+  display:flex;
+  gap:10px;
+  justify-content:flex-end;
+  flex-wrap:wrap;
+}
+
+/* Sticky side panel (shared) */
+.docs{
+  position:sticky;
+  top: 14px;
+}
+.pre{
+  font-family: var(--mono);
+  font-size: 12px;
+  color:#0b1220;
+  background: var(--soft);
+  border:1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px;
+  white-space: pre;
+  overflow:auto;
+  line-height: 1.45;
+  tab-size: 2;
+  margin:0;
+}
+.pre code{display:block;}
+.codeHead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin: 0 0 10px;
+}
+.codeTitle{
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--muted);
+}
+.muter{
+  color: var(--muted);
+  font-size: 12px;
+  margin: 0 0 10px;
+  line-height:1.35;
+}
+
+/* Info tooltip */
+.titleLine{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.info{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  border:1px solid var(--line2);
+  background:#fff;
+  color: var(--muted);
+  font-weight: 900;
+  font-size: 12px;
+  user-select:none;
+}
+.infoTip{
+  position:absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(360px, 80vw);
+  background: #0f172a;
+  color:#fff;
+  border-radius: 14px;
+  padding: 10px 12px;
+  font-size: 12px;
+  line-height: 1.35;
+  box-shadow: var(--shadow);
+  display:none;
+  z-index: 120;
+}
+.info:hover .infoTip,
+.info:focus-within .infoTip{display:block;}

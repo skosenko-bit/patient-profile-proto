@@ -1,0 +1,77 @@
+.btn{
+  display:inline-flex;
+  gap:8px;
+  align-items:center;
+  justify-content:center;
+  border-radius: 10px;
+  padding: 10px 18px;
+  border:1px solid var(--line);
+  background:#fff;
+  cursor:pointer;
+  font-weight:800;
+  font-size: 14px;
+  color:#0b1220;
+  user-select:none;
+}
+.btn:hover{background:var(--soft)}
+.btn:focus{outline:none; box-shadow: var(--focus)}
+.btn[disabled]{
+  opacity:.55;
+  cursor:not-allowed;
+}
+.btn[disabled]:hover{background:#fff}
+.btn.primary{
+  background: var(--accent);
+  border-color: var(--accent);
+  color:#fff;
+}
+.btn.primary:hover{filter:brightness(.98)}
+.btn.danger{
+  background:#fff;
+  border-color: rgba(220,38,38,.35);
+  color: var(--danger);
+}
+.btn.dangerSolid{
+  background: var(--danger);
+  border-color: var(--danger);
+  color:#fff;
+}
+
+/* Header edit actions (link-style) */
+.card-h .actions .btn{
+  border:0;
+  background:transparent;
+  padding: 6px 8px;
+  border-radius: 10px;
+  color: var(--accent);
+  font-weight: 800;
+}
+.card-h .actions .btn:hover{
+  background: transparent;
+  text-decoration: underline;
+}
+.card-h .actions .btn:disabled{
+  color: var(--muted);
+  text-decoration: none;
+}
+.card-h .actions .btn[disabled]:hover{background:transparent;}
+
+.iconBtn{
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border:1px solid transparent;
+  background: transparent;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  color: var(--muted);
+  padding:0;
+}
+.iconBtn svg{width:18px; height:18px; display:block;}
+.iconBtn:hover{
+  background: var(--soft);
+  border-color: var(--line);
+  color: var(--danger);
+}

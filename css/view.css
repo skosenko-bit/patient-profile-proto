@@ -1,0 +1,69 @@
+/* View mode key-value table */
+.kv{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:0;
+  border:1px solid var(--line);
+  border-radius: var(--radius2);
+  overflow:hidden;
+}
+@media (max-width: 900px){ .kv{grid-template-columns: repeat(2, 1fr);} }
+@media (max-width: 620px){ .kv{grid-template-columns: 1fr;} }
+.kv .item{
+  border-left:1px solid var(--line);
+  border-top:1px solid var(--line);
+  padding: 16px 18px;
+  background: transparent;
+  min-height: 74px;
+}
+.kv .item.blank{background: transparent;}
+.kv .item:nth-child(-n+3){ border-top:0; }
+.kv .item:nth-child(3n+1){ border-left:0; }
+@media (max-width: 900px){
+  .kv .item{ border-top:1px solid var(--line); border-left:1px solid var(--line); }
+  .kv .item:nth-child(-n+2){ border-top:0; }
+  .kv .item:nth-child(2n+1){ border-left:0; }
+}
+@media (max-width: 620px){
+  .kv .item{ border-top:1px solid var(--line); border-left:0; }
+  .kv .item:first-child{ border-top:0; }
+}
+.kv .item .k{
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 700;
+  letter-spacing: .1px;
+  margin-bottom: 6px;
+}
+.kv .item .v{
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink);
+  word-break:break-word;
+}
+.kv .item .v.muted{
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.emptyNote{
+  padding: 10px 12px;
+  border:1px dashed var(--line2);
+  border-radius: 12px;
+  color: var(--muted);
+  background: var(--soft);
+  font-size: 13px;
+}
+
+/* One-column KV (force full-width single column even on wide screens) */
+.kv.kv1{grid-template-columns: 1fr;}
+.kv.kv1 .item{
+  border-top:1px solid var(--line);
+  border-left:0;
+}
+.kv.kv1 .item:first-child{border-top:0;}
+
+/* Message-only KV (e.g., None / No DCWs / No Candidates) */
+.kv.kvMsg .k{display:none;}
+.kv.kvMsg .v{width:100%;}
+.kv.kvMsg .v{text-align:left;}
