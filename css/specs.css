@@ -21,6 +21,12 @@
   overflow:hidden;
 }
 
+.specIntro{
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
 .spec summary{
   cursor:pointer;
   list-style:none;

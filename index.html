@@ -132,17 +132,62 @@
 		        <div class="card-h">
 		          <div class="title">
 		            <h2>Specifications</h2>
+		            <p class="sub">Prototype requirements</p>
 		          </div>
 		          <div class="actions">
 		            <button class="btn" id="specCollapseAllBtn" type="button">Collapse all</button>
 		          </div>
 		        </div>
 		        <div class="body">
+		          <div class="specIntro">
+		            This panel documents prototype requirements and expected behaviors for each section.
+		          </div>
+
 		          <details class="spec" open>
 		            <summary>Global behavior</summary>
 		            <div class="specBody">
+		              <h4>Patient Type</h4>
 		              <ul>
+		                <li><b>Referral</b> is permissive: some sections may be saved empty (e.g., Emergency Contact).</li>
+		                <li><b>Existing</b> is strict: required rules are enforced and empty-required sections show a warning in view mode.</li>
+		              </ul>
+
+		              <h4>Modes</h4>
+		              <ul>
+		                <li><b>View mode</b> shows a read-only table when data exists; if the section is empty, it shows <b>None</b> (Assignments show <b>No DCWs</b>/<b>No Candidates</b>).</li>
+		                <li><b>Edit mode</b> shows interactive fields and the section footer (Apply/Cancel and any remove actions).</li>
+		                <li><b>Cancel</b> returns to view mode; if changes exist, a confirmation modal is shown.</li>
+		              </ul>
+
+		              <h4>Validation UX</h4>
+		              <ul>
+		                <li>On Apply, validation failures <b>do not open a modal</b>; invalid fields are highlighted and the UI scrolls to the first error.</li>
+		                <li>Each field reserves one line under the control for inline validation messages (to avoid layout jumping).</li>
+		              </ul>
+
+		              <h4>Input Rules</h4>
+		              <ul>
+		                <li>Email fields strip spaces and must be a valid email format when provided.</li>
+		                <li>ZIP and phone fields accept digits only in this prototype.</li>
+		              </ul>
+
+		              <h4>Directory Search (Typeahead)</h4>
+		              <ul>
+		                <li>Typeahead results display <b>Email</b> first and <b>Full Name</b> second (stacked).</li>
+		                <li>Pressing <b>Enter</b> keeps the typed value without auto-selecting a match (“create new” behavior).</li>
+		                <li>Clicking the “×” clears the input; for DCW-linked fields this may trigger a confirmation modal.</li>
+		              </ul>
+
+		              <h4>Specifications Panel</h4>
+		              <ul>
+		                <li>This panel is an accordion: opening one item collapses the previously open item.</li>
 		                <li>Use <b>Hide Specs</b> in the top bar to collapse this panel and widen the working area.</li>
+		              </ul>
+
+		              <h4>Standard Modals (Copy)</h4>
+		              <ul>
+		                <li>Unsaved changes: Title “Unsaved changes”, text “Do you want to save changes or cancel everything?”, buttons “Save Changes” / “Cancel Changes”.</li>
+		                <li>Clear selected DCW: Title “Clear selected DCW”, text “Are you sure you want to clear selected DCW? This action will clear all the fields”, buttons “Proceed” / “Cancel”.</li>
 		              </ul>
 		            </div>
 		          </details>
@@ -154,6 +199,36 @@
 		              <ul>
 		                <li>Capture a Primary Caregiver contact and optionally link it to an existing DCW directory record.</li>
 		              </ul>
+
+		              <h4>View Mode</h4>
+		              <ul>
+		                <li>When empty, the section shows <b>None</b>.</li>
+		                <li>When filled, the section shows a table; empty optional values render as “–”.</li>
+		                <li>For <b>Existing</b>, an empty Primary Caregiver (without an explicit “remove”) shows a warning banner.</li>
+		              </ul>
+
+		              <h4>Edit Mode</h4>
+		              <ul>
+		                <li>Shows tip text above fields: “Start by entering a name or email. You can select an existing DCW contact, or enter new information to add a Primary Caregiver”.</li>
+		                <li>Apply saves and returns to view mode; Cancel prompts if there are unsaved changes.</li>
+		                <li>Remove Primary Caregiver appears once any field has content and returns to empty view state after confirmation.</li>
+		              </ul>
+
+		              <h4>Required Fields</h4>
+		              <ul>
+		                <li>Required: Name, Relationship, ZIP, City, County, State, Cell phone.</li>
+		                <li>Address required only for <b>Existing</b>; optional for <b>Referral</b>.</li>
+		                <li>Email is optional; if provided it must be a valid email format.</li>
+		              </ul>
+
+		              <h4>Directory Attach</h4>
+		              <ul>
+		                <li>Name supports DCW lookup by name/email; selecting a DCW hydrates contact fields and disables Email search until cleared.</li>
+		                <li>Email supports DCW lookup by email; selecting a DCW hydrates contact fields but does not lock Email.</li>
+		                <li>Pressing Enter without selecting a match keeps the typed value and does not attach a DCW.</li>
+		                <li>Clearing Name or Email via “×” when a DCW is attached prompts: “Are you sure you want to clear selected DCW? This action will clear all the fields”.</li>
+		                <li>Remove modal copy: Title “Remove Primary Caregiver”, text “Do you want to remove Primary Caregiver?”, buttons “Remove” / “Cancel”.</li>
+		              </ul>
 		            </div>
 		          </details>
 
@@ -163,6 +238,33 @@
 		              <h4>Purpose</h4>
 		              <ul>
 		                <li>Capture whether the patient has an Informal Support person, refuses agency staffing, or accepts agency staffing.</li>
+		              </ul>
+
+		              <h4>View Mode</h4>
+		              <ul>
+		                <li>Default shows <b>None</b> when no option is selected.</li>
+		                <li>When Selection = “Add Informal Support”, the table shows the saved contact info; empty optional values render as “–”.</li>
+		                <li>When Selection = “Refuse Agency Staffing” or “Agency Staffing”, only the selection value is shown.</li>
+		              </ul>
+
+		              <h4>Edit Mode</h4>
+		              <ul>
+		                <li>Shows tip text above options: “Select whether a patient has Informal Support person, agrees or refuses agency staffing. If you choose ‘Person’, enter their contact info.”</li>
+		                <li>Selection radios: Add Informal Support / Refuse Agency Staffing / Agency Staffing.</li>
+		                <li>When Selection is not “Add Informal Support”, contact fields are hidden.</li>
+		              </ul>
+
+		              <h4>Required Fields</h4>
+		              <ul>
+		                <li>For <b>Existing</b>, Selection is required; for <b>Referral</b>, Selection may be empty.</li>
+		                <li>When Selection = “Add Informal Support”, required: Name, Address, ZIP, City, State, Cell phone.</li>
+		                <li>County, Home phone, Work phone are optional.</li>
+		              </ul>
+
+		              <h4>Modals</h4>
+		              <ul>
+		                <li>If the user entered any contact info under “Add Informal Support” and then switches to another option, show: “Are you sure you want to change to …? This action will clear all the fields” with Accept/Cancel.</li>
+		                <li>Cancel from edit mode prompts if there are unsaved changes.</li>
 		              </ul>
 		            </div>
 		          </details>
@@ -174,6 +276,31 @@
 		              <ul>
 		                <li>Capture a trusted emergency contact who should be notified in a medical crisis.</li>
 		              </ul>
+
+		              <h4>View Mode</h4>
+		              <ul>
+		                <li>When empty, the section shows <b>None</b>.</li>
+		                <li>When filled, the section shows a table; empty optional values render as “–”.</li>
+		                <li>For <b>Existing</b>, an empty Emergency Contact shows a warning banner.</li>
+		              </ul>
+
+		              <h4>Edit Mode</h4>
+		              <ul>
+		                <li>Apply saves and returns to view mode; Cancel prompts if there are unsaved changes.</li>
+		                <li>Remove Emergency Contact appears once any field has content and returns to empty view state after confirmation.</li>
+		              </ul>
+
+		              <h4>Required Fields</h4>
+		              <ul>
+		                <li>For <b>Existing</b>, the section is required.</li>
+		                <li>For <b>Referral</b>, the section can be saved empty; once the user starts typing, required rules are enforced.</li>
+		                <li>Required when enforced: Name, Address, City, State, ZIP, Cell phone. Relationship and County are optional.</li>
+		              </ul>
+
+		              <h4>Modals</h4>
+		              <ul>
+		                <li>Remove confirmation: “Are you sure you want to delete Emergency Contact?” with Delete/Cancel.</li>
+		              </ul>
 		            </div>
 		          </details>
 
@@ -182,7 +309,35 @@
 		            <div class="specBody">
 		              <h4>Purpose</h4>
 		              <ul>
-		                <li>Add and manage DCW assignments.</li>
+		                <li>Add and manage up to 10 DCW assignments, with email lookup and per-entry deletion.</li>
+		              </ul>
+
+		              <h4>View Mode</h4>
+		              <ul>
+		                <li>When no entries exist, the section shows <b>No DCWs</b>.</li>
+		                <li>When entries exist, the section shows a table grouped by DCW # (Email, Phone number, First name, Last name).</li>
+		              </ul>
+
+		              <h4>Edit Mode</h4>
+		              <ul>
+		                <li>Entering edit mode shows “No DCW’s assigned yet” and disabled Apply until the user presses “+ Add DCW”.</li>
+		                <li>After the first add, each DCW is rendered as an entry card with a delete icon.</li>
+		                <li>“+ Add DCW” remains visible and becomes disabled when 10 entries are present.</li>
+		              </ul>
+
+		              <h4>Required Fields</h4>
+		              <ul>
+		                <li>Each entry requires: Email (valid), Phone number, First name, Last name.</li>
+		                <li>Phone/Name fields are disabled until an Email value is entered.</li>
+		                <li>Adding an additional DCW requires existing entries to be valid.</li>
+		              </ul>
+
+		              <h4>Directory Search</h4>
+		              <ul>
+		                <li>Email supports directory lookup; selecting a match hydrates phone + first/last name.</li>
+		                <li>Already-added DCWs do not appear in the list for other rows.</li>
+		                <li>Clearing the Email via “×” clears the rest of the entry and disables dependent fields.</li>
+		                <li>Deleting an entry re-numbers the remaining entries (DCW 1, DCW 2, …).</li>
 		              </ul>
 		            </div>
 		          </details>
@@ -192,7 +347,18 @@
 		            <div class="specBody">
 		              <h4>Purpose</h4>
 		              <ul>
-		                <li>Track candidate assignments separately from DCWs.</li>
+		                <li>Track candidate assignments separately from DCWs with identical behavior and requirements.</li>
+		              </ul>
+
+		              <h4>View/Edit Mode</h4>
+		              <ul>
+		                <li>View mode shows <b>No Candidates</b> when empty; otherwise displays the grouped table.</li>
+		                <li>Edit mode matches DCW Assignments with candidate-specific labels and “+ Add Candidate”.</li>
+		              </ul>
+
+		              <h4>Required Fields</h4>
+		              <ul>
+		                <li>Same as DCW Assignments: valid Email + Phone + First name + Last name per candidate entry.</li>
 		              </ul>
 		            </div>
 		          </details>
