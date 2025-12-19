@@ -18,10 +18,7 @@ function ecValidate(d){
   const errors = [];
   const required = (fieldId, val)=>{ if(!String(val||"").trim()) errors.push(fieldId); };
 
-  // Only enforce if existing OR user is trying to save some data
-  const must = reqEmergencyRequired() || anyFilled(d);
-
-  if (must){
+  if (state.patientType === "existing"){
     required("ec_name", d.name);
     // Relationship optional (per requirement)
     required("ec_address", d.address);
@@ -124,7 +121,7 @@ function ecRender(){
   }
 
   const d = sec.draft;
-  const must = reqEmergencyRequired() || anyFilled(d);
+  const must = state.patientType === "existing";
   const invalid = (id)=> (sec.errors || []).includes(id);
   const showRemove = anyFilled(d);
 
@@ -158,8 +155,7 @@ function ecRender(){
   const syncRequired = ()=>{
     const form = $("ecForm");
     if (!form) return;
-    const show = reqEmergencyRequired() || anyFilled(state.emergency.draft);
-    form.dataset.showRequired = show ? "1" : "0";
+    form.dataset.showRequired = state.patientType === "existing" ? "1" : "0";
   };
 
   bind("ec_name",(v)=>{ d2.name=v; renderDocs(); syncRequired(); });

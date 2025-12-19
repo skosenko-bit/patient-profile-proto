@@ -24,19 +24,20 @@ function pcValidate(d){
   const errors = [];
   const required = (fieldId, val)=>{ if(!String(val||"").trim()) errors.push(fieldId); };
 
-  required("pc_name", d.name);
-  required("pc_rel", d.relationship);
+  if (state.patientType === "existing"){
+    required("pc_name", d.name);
+    required("pc_rel", d.relationship);
+    required("pc_address", d.address);
 
-  if (reqAddressPrimary()) required("pc_address", d.address);
+    required("pc_zip", d.zip);
+    required("pc_city", d.city);
+    required("pc_county", d.county);
+    required("pc_state", d.state);
+    required("pc_cell", d.cellPhone);
+  }
 
   const email = String(d.email || "").trim();
   if (email && !isValidEmail(email)) errors.push("pc_email");
-
-  required("pc_zip", d.zip);
-  required("pc_city", d.city);
-  required("pc_county", d.county);
-  required("pc_state", d.state);
-  required("pc_cell", d.cellPhone);
 
   return errors;
 }
@@ -149,7 +150,7 @@ function pcRender(){
       </div>
     </div>
 
-    <div class="form">
+    <div class="form" data-show-required="${state.patientType === "existing" ? "1" : "0"}">
       ${fieldTypeahead("pc_name", "Name", true, d.name, "", false, {invalid: invalid("pc_name")})}
       ${fieldInput("pc_email", "Email", false, d.email, d.lockEmail ? true : false, "", {invalid: invalid("pc_email"), type:"email", autocomplete:"email", filter:"email"})}
       ${fieldSelect("pc_rel", "Relationship", true, d.relationship, REL_OPTIONS, false, {invalid: invalid("pc_rel")})}

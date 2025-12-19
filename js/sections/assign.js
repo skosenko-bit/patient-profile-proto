@@ -53,6 +53,7 @@ function createAssignSection(cfg){
   function validateInternal(d, {requireAll}){
     const errors = [];
     const entries = Array.isArray(d.entries) ? d.entries : [];
+    const enforceRequired = state.patientType === "existing";
     entries.forEach((e, idx)=>{
       if (!requireAll && !anyFilledAssignEntry(e)) return;
       const emailId = `${idPrefix}_${idx}_email`;
@@ -61,19 +62,23 @@ function createAssignSection(cfg){
       const lastId = `${idPrefix}_${idx}_last`;
 
       const email = String(e.email || "").trim();
-      if (!email || !isValidEmail(email)){
-        errors.push(emailId);
+      if (enforceRequired){
+        if (!email || !isValidEmail(email)){
+          errors.push(emailId);
+          return;
+        }
+        if (!String(e.phone || "").trim()) errors.push(phoneId);
+        if (!String(e.firstName || "").trim()) errors.push(firstId);
+        if (!String(e.lastName || "").trim()) errors.push(lastId);
         return;
       }
-      if (!String(e.phone || "").trim()) errors.push(phoneId);
-      if (!String(e.firstName || "").trim()) errors.push(firstId);
-      if (!String(e.lastName || "").trim()) errors.push(lastId);
+      if (email && !isValidEmail(email)) errors.push(emailId);
     });
     return errors;
   }
 
   function validateAll(d){
-    return validateInternal(d, {requireAll:true});
+    return validateInternal(d, {requireAll: state.patientType === "existing"});
   }
 
   function apply(){
@@ -177,12 +182,12 @@ function createAssignSection(cfg){
                 <div class="dcwEntryTitle">${escapeHtml(entityLabel)} ${n}</div>
                 <button class="iconBtn" type="button" data-del="${idx}" aria-label="Delete ${escapeAttr(entityLabel)} ${n}">${ICON_TRASH}</button>
               </div>
-              <div class="form dcwForm">
-                ${fieldTypeahead(emailId, "Email", true, e.email, "", false, {invalid: invalid(emailId), type:"email", autocomplete:"email", filter:"email"})}
-                ${fieldInput(phoneId, "Phone number", true, e.phone, disabled, "", {invalid: invalid(phoneId), filter:"digits", inputMode:"numeric"})}
-                ${fieldInput(firstId, "First name", true, e.firstName, disabled, "", {invalid: invalid(firstId)})}
-                ${fieldInput(lastId, "Last name", true, e.lastName, disabled, "", {invalid: invalid(lastId)})}
-              </div>
+	              <div class="form dcwForm" data-show-required="${state.patientType === "existing" ? "1" : "0"}">
+	                ${fieldTypeahead(emailId, "Email", true, e.email, "", false, {invalid: invalid(emailId), type:"email", autocomplete:"email", filter:"email"})}
+	                ${fieldInput(phoneId, "Phone number", true, e.phone, disabled, "", {invalid: invalid(phoneId), filter:"digits", inputMode:"numeric"})}
+	                ${fieldInput(firstId, "First name", true, e.firstName, disabled, "", {invalid: invalid(firstId)})}
+	                ${fieldInput(lastId, "Last name", true, e.lastName, disabled, "", {invalid: invalid(lastId)})}
+	              </div>
             </div>
           `;
         }).join("")}
@@ -212,12 +217,14 @@ function createAssignSection(cfg){
         return;
       }
       if (sec2.draft.entries.length >= MAX_ASSIGN) return;
-      const errs = validateAll(sec2.draft);
-      if (errs.length){
-        setSectionErrors(sectionKey, errs);
-        renderAll();
-        focusFirstError(errs);
-        return;
+      if (state.patientType === "existing"){
+        const errs = validateAll(sec2.draft);
+        if (errs.length){
+          setSectionErrors(sectionKey, errs);
+          renderAll();
+          focusFirstError(errs);
+          return;
+        }
       }
       sec2.draft.entries.push(emptyAssignEntry());
       renderAll();

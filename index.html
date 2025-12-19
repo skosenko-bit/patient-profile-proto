@@ -213,12 +213,12 @@
 		                <li>Remove Primary Caregiver appears once any field has content and returns to empty view state after confirmation.</li>
 		              </ul>
 
-		              <h4>Required Fields</h4>
-		              <ul>
-		                <li>Required: Name, Relationship, ZIP, City, County, State, Cell phone.</li>
-		                <li>Address required only for <b>Existing</b>; optional for <b>Referral</b>.</li>
-		                <li>Email is optional; if provided it must be a valid email format.</li>
-		              </ul>
+			              <h4>Required Fields</h4>
+			              <ul>
+			                <li>For <b>Referral</b>, all fields are optional.</li>
+			                <li>For <b>Existing</b>, required: Name, Relationship, Address, ZIP, City, County, State, Cell phone.</li>
+			                <li>Email is optional; if provided it must be a valid email format.</li>
+			              </ul>
 
 		              <h4>Directory Attach</h4>
 		              <ul>
@@ -258,12 +258,13 @@
 		                <li>When Selection is not “Add Informal Support”, contact fields are hidden.</li>
 		              </ul>
 
-		              <h4>Required Fields</h4>
-		              <ul>
-		                <li>For <b>Existing</b>, Selection is required; for <b>Referral</b>, Selection may be empty.</li>
-		                <li>When Selection = “Add Informal Support”, required: Name, Address, ZIP, City, State, Cell phone.</li>
-		                <li>County, Home phone, Work phone are optional.</li>
-		              </ul>
+			              <h4>Required Fields</h4>
+			              <ul>
+			                <li>For <b>Referral</b>, all fields are optional (Selection may be empty; contact fields may be partial).</li>
+			                <li>For <b>Existing</b>, Selection is required.</li>
+			                <li>For <b>Existing</b> with Selection = “Add Informal Support”, required: Name, Address, ZIP, City, State, Cell phone.</li>
+			                <li>County, Home phone, Work phone are optional.</li>
+			              </ul>
 
 		              <h4>Modals</h4>
 		              <ul>
@@ -299,12 +300,12 @@
 		                <li>Remove Emergency Contact appears once any field has content and returns to empty view state after confirmation.</li>
 		              </ul>
 
-		              <h4>Required Fields</h4>
-		              <ul>
-		                <li>For <b>Existing</b>, the section is required.</li>
-		                <li>For <b>Referral</b>, the section can be saved empty; once the user starts typing, required rules are enforced.</li>
-		                <li>Required when enforced: Name, Address, City, State, ZIP, Cell phone. Relationship and County are optional.</li>
-		              </ul>
+			              <h4>Required Fields</h4>
+			              <ul>
+			                <li>For <b>Referral</b>, all fields are optional.</li>
+			                <li>For <b>Existing</b>, the section is required.</li>
+			                <li>For <b>Existing</b>, required: Name, Address, City, State, ZIP, Cell phone. Relationship and County are optional.</li>
+			              </ul>
 
 		              <h4>Modals</h4>
 		              <ul>
@@ -334,12 +335,13 @@
 		                <li>“+ Add DCW” remains visible and becomes disabled when 10 entries are present.</li>
 		              </ul>
 
-		              <h4>Required Fields</h4>
-		              <ul>
-		                <li>Each entry requires: Email (valid), Phone number, First name, Last name.</li>
-		                <li>Phone/Name fields are disabled until an Email value is entered.</li>
-		                <li>Adding an additional DCW requires existing entries to be valid.</li>
-		              </ul>
+			              <h4>Required Fields</h4>
+			              <ul>
+			                <li>For <b>Referral</b>, all fields are optional (Email must be a valid format if provided).</li>
+			                <li>For <b>Existing</b>, each entry requires: Email (valid), Phone number, First name, Last name.</li>
+			                <li>Phone/Name fields are disabled until an Email value is entered.</li>
+			                <li>For <b>Existing</b>, adding an additional DCW requires existing entries to be valid.</li>
+			              </ul>
 
 		              <h4>Directory Search</h4>
 		              <ul>
@@ -365,10 +367,11 @@
 			                <li>Edit mode matches DCW Assignment with candidate-specific labels and “+ Add Candidate”.</li>
 			              </ul>
 
-			              <h4>Required Fields</h4>
-			              <ul>
-			                <li>Same as DCW Assignment: valid Email + Phone + First name + Last name per candidate entry.</li>
-			              </ul>
+				              <h4>Required Fields</h4>
+				              <ul>
+				                <li>For <b>Referral</b>, all fields are optional (Email must be a valid format if provided).</li>
+				                <li>For <b>Existing</b>, same as DCW Assignment: valid Email + Phone + First name + Last name per candidate entry.</li>
+				              </ul>
 			            </div>
 			          </details>
 		        </div>

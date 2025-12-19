@@ -45,6 +45,7 @@ function setPatientType(type){
   $("btnReferral").classList.toggle("active", type==="referral");
   $("btnExisting").classList.toggle("active", type==="existing");
   $("reqPill").textContent = "Mode: " + (type==="existing" ? "Existing" : "Referral");
+  ["primary","informal","emergency","dcwAssign","candAssign"].forEach(clearSectionErrors);
   renderAll();
 }
 

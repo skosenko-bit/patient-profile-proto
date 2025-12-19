@@ -38,6 +38,14 @@ function kvMessage(message){
     </div>
   `;
 }
+
+function fieldErrorText({invalid, value, type, filter}){
+  if (!invalid) return "";
+  const v = String(value ?? "").trim();
+  if (!v) return "Required";
+  if (type === "email" || filter === "email") return "Enter a valid email";
+  return "Required";
+}
 function fieldInput(id, label, required, value, disabled=false, help="", opts={}){
   const {
     fieldClass="",
@@ -60,6 +68,7 @@ function fieldInput(id, label, required, value, disabled=false, help="", opts={}
     filter ? `data-filter="${escapeAttr(filter)}"` : "",
     maxlength !== "" ? `maxlength="${escapeAttr(String(maxlength))}"` : ""
   ].filter(Boolean).join(" ");
+  const msg = fieldErrorText({invalid, value, type, filter});
   return `
     <div class="field ${escapeAttr(fieldClass)} ${invalid ? "invalid" : ""}">
       <div class="label">${escapeHtml(label)} ${req}</div>
@@ -69,7 +78,7 @@ function fieldInput(id, label, required, value, disabled=false, help="", opts={}
         <div class="typeahead" id="${id}_list"></div>
       </div>
       ${h}
-      <div class="msg" id="${id}_msg"></div>
+      <div class="msg" id="${id}_msg">${escapeHtml(msg)}</div>
     </div>
   `;
 }
@@ -95,6 +104,7 @@ function fieldTypeahead(id, label, required, value, helpLine="", showHelp=true, 
     filter ? `data-filter="${escapeAttr(filter)}"` : "",
     maxlength !== "" ? `maxlength="${escapeAttr(String(maxlength))}"` : ""
   ].filter(Boolean).join(" ");
+  const msg = fieldErrorText({invalid, value, type, filter});
   return `
     <div class="field ${escapeAttr(fieldClass)} ${invalid ? "invalid" : ""}">
       <div class="label">${escapeHtml(label)} ${req}</div>
@@ -104,13 +114,14 @@ function fieldTypeahead(id, label, required, value, helpLine="", showHelp=true, 
         <div class="typeahead" id="${id}_list"></div>
       </div>
       ${help}
-      <div class="msg" id="${id}_msg"></div>
+      <div class="msg" id="${id}_msg">${escapeHtml(msg)}</div>
     </div>
   `;
 }
 function fieldSelect(id, label, required, value, options, disabled=false, opts={}){
   const {fieldClass="", controlClass="", invalid=false} = opts || {};
   const req = required ? `<span class="req">*</span>` : "";
+  const msg = fieldErrorText({invalid, value, type:"", filter:""});
   const optionHtml = options.map(o => `<option value="${escapeAttr(o)}" ${o===value?"selected":""}>${escapeHtml(o||"Select")}</option>`).join("");
   return `
     <div class="field ${escapeAttr(fieldClass)} ${invalid ? "invalid" : ""}">
@@ -120,7 +131,7 @@ function fieldSelect(id, label, required, value, options, disabled=false, opts={
         <button class="xbtn selectX" id="${id}_x" type="button" aria-label="Clear">×</button>
         <div class="typeahead" id="${id}_list"></div>
       </div>
-      <div class="msg" id="${id}_msg"></div>
+      <div class="msg" id="${id}_msg">${escapeHtml(msg)}</div>
     </div>
   `;
 }

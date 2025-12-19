@@ -18,17 +18,17 @@ function isValidate(d){
   const errors = [];
   const required = (fieldId, val)=>{ if(!String(val||"").trim()) errors.push(fieldId); };
 
-  if (reqInformalSelection()){
+  if (state.patientType === "existing"){
     required("is_selection", d.selection);
-  }
-  if (d.selection === "add"){
-    required("is_name", d.name);
-    required("is_address", d.address);
-    required("is_zip", d.zip);
-    required("is_city", d.city);
-    // County optional (per requirement)
-    required("is_state", d.state);
-    required("is_cell", d.cellPhone);
+    if (d.selection === "add"){
+      required("is_name", d.name);
+      required("is_address", d.address);
+      required("is_zip", d.zip);
+      required("is_city", d.city);
+      // County optional (per requirement)
+      required("is_state", d.state);
+      required("is_cell", d.cellPhone);
+    }
   }
   return errors;
 }
@@ -130,11 +130,11 @@ function isRender(){
         ${radio("is_sel_refuse", "Selection", "refuse", d.selection, "Refuse Agency Staffing")}
         ${radio("is_sel_agency", "Selection", "agency", d.selection, "Agency Staffing")}
       </div>
-      <div class="msg" id="is_selection_msg"></div>
+      <div class="msg" id="is_selection_msg">${selInvalid ? "Required" : ""}</div>
     </div>
 
     ${d.selection === "add" ? `
-      <div class="form">
+      <div class="form" data-show-required="${state.patientType === "existing" ? "1" : "0"}">
         ${fieldInput("is_name", "Name", true, d.name, false, "", {invalid: invalid("is_name")})}
         ${fieldInput("is_address", "Address", true, d.address, false, "", {invalid: invalid("is_address")})}
         ${fieldInput("is_zip", "ZIP", true, d.zip, false, "", {invalid: invalid("is_zip"), filter:"digits", inputMode:"numeric"})}

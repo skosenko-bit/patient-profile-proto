@@ -43,6 +43,7 @@ function syncFromTarget(target){
   if (!(target instanceof HTMLElement)) return;
   if (target.matches("input[type=radio]") && target.getAttribute("name")==="Selection"){
     clearErrorByFieldId("is_selection");
+    $("is_selection_msg") && ($("is_selection_msg").textContent = "");
     target.closest(".field")?.classList.remove("invalid");
   }
   if (target.matches("input, select") && target.id){
@@ -50,6 +51,8 @@ function syncFromTarget(target){
     syncPrimaryRemoveButton();
     syncEmergencyRemoveButton();
     clearErrorByFieldId(target.id);
+    const msg = $(`${target.id}_msg`);
+    if (msg) msg.textContent = "";
     target.closest(".field")?.classList.remove("invalid");
   }
 }
