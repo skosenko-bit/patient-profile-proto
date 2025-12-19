@@ -130,6 +130,7 @@ function isRender(){
         ${radio("is_sel_refuse", "Selection", "refuse", d.selection, "Refuse Agency Staffing")}
         ${radio("is_sel_agency", "Selection", "agency", d.selection, "Agency Staffing")}
       </div>
+      <div class="msg" id="is_selection_msg"></div>
     </div>
 
     ${d.selection === "add" ? `

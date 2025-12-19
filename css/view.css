@@ -63,6 +63,17 @@
 }
 .kv.kv1 .item:first-child{border-top:0;}
 
+/* Two-column KV (force 2 columns on wide screens) */
+@media (min-width: 901px){
+  .kv.kv2{grid-template-columns: repeat(2, 1fr);}
+  .kv.kv2 .item{
+    border-top:1px solid var(--line);
+    border-left:1px solid var(--line);
+  }
+  .kv.kv2 .item:nth-child(-n+2){ border-top:0; }
+  .kv.kv2 .item:nth-child(2n+1){ border-left:0; }
+}
+
 /* Message-only KV (e.g., None / No DCWs / No Candidates) */
 .kv.kvMsg .k{display:none;}
 .kv.kvMsg .v{width:100%;}

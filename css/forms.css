@@ -99,6 +99,12 @@ select[disabled]{
   font-size: 13px;
   color: var(--muted);
 }
+.msg{
+  min-height: 14px;
+  font-size: 12px;
+  line-height: 1.2;
+  color: var(--danger);
+}
 .field.invalid input,
 .field.invalid select{
   border-color: rgba(220,38,38,.6);

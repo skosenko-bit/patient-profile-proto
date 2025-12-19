@@ -127,9 +127,9 @@ function createAssignSection(cfg){
         pushKV(items, `${entityLabel} ${n} Phone number`, e.phone);
         pushKV(items, `${entityLabel} ${n} First name`, e.firstName);
         pushKV(items, `${entityLabel} ${n} Last name`, e.lastName);
-        padKv(items);
+        padKv(items, 2);
       });
-      root.innerHTML = `<div class="kv">${items.join("")}</div>`;
+      root.innerHTML = `<div class="kv kv2">${items.join("")}</div>`;
       return;
     }
 

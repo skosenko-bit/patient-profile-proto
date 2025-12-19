@@ -18,8 +18,8 @@ function kvColumns(){
   if (window.matchMedia?.("(max-width: 900px)")?.matches) return 2;
   return 3;
 }
-function padKv(items){
-  const cols = kvColumns();
+function padKv(items, colsOverride){
+  const cols = Number.isFinite(colsOverride) && colsOverride > 0 ? colsOverride : kvColumns();
   const mod = items.length % cols;
   if (!mod) return;
   const missing = cols - mod;
@@ -69,6 +69,7 @@ function fieldInput(id, label, required, value, disabled=false, help="", opts={}
         <div class="typeahead" id="${id}_list"></div>
       </div>
       ${h}
+      <div class="msg" id="${id}_msg"></div>
     </div>
   `;
 }
@@ -103,6 +104,7 @@ function fieldTypeahead(id, label, required, value, helpLine="", showHelp=true, 
         <div class="typeahead" id="${id}_list"></div>
       </div>
       ${help}
+      <div class="msg" id="${id}_msg"></div>
     </div>
   `;
 }
@@ -118,6 +120,7 @@ function fieldSelect(id, label, required, value, options, disabled=false, opts={
         <button class="xbtn selectX" id="${id}_x" type="button" aria-label="Clear">×</button>
         <div class="typeahead" id="${id}_list"></div>
       </div>
+      <div class="msg" id="${id}_msg"></div>
     </div>
   `;
 }
