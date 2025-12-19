@@ -249,8 +249,8 @@ function pcRender(){
     },
     renderOpt: (dcw)=> `
       <div class="opt">
-        <div class="n">${escapeHtml(dcw.fullName)}</div>
-        <div class="m">${escapeHtml(dcw.email)}</div>
+        <div class="n">${escapeHtml(dcw.email)}</div>
+        <div class="m">${escapeHtml(dcw.fullName)}</div>
       </div>
     `
   });
@@ -319,8 +319,8 @@ function pcRender(){
       },
       renderOpt: (dcw)=> `
         <div class="opt">
-          <div class="n">${escapeHtml(dcw.fullName)}</div>
-          <div class="m">${escapeHtml(dcw.email)}</div>
+          <div class="n">${escapeHtml(dcw.email)}</div>
+          <div class="m">${escapeHtml(dcw.fullName)}</div>
         </div>
       `
     });
