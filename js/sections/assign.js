@@ -317,7 +317,21 @@ function createAssignSection(cfg){
         filterFn: (q)=> {
           const s = q.trim().toLowerCase();
           if (!s) return [];
-          return DCWS.filter(x => x.email.toLowerCase().includes(s));
+          const usedIds = new Set();
+          const usedEmails = new Set();
+          (state[sectionKey]?.draft?.entries || []).forEach((ent, j)=>{
+            if (j === idx) return;
+            if (ent?.dcwId) usedIds.add(ent.dcwId);
+            const em = String(ent?.email || "").trim().toLowerCase();
+            if (em) usedEmails.add(em);
+          });
+          return DCWS.filter((x)=>{
+            const em = x.email.toLowerCase();
+            if (!em.includes(s)) return false;
+            if (usedIds.has(x.id)) return false;
+            if (usedEmails.has(em)) return false;
+            return true;
+          });
         },
         renderOpt: (dcw)=> `
           <div class="opt">

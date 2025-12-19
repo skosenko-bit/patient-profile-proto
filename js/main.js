@@ -83,6 +83,20 @@ function setSpecsCollapsed(collapsed){
   } catch {}
 }
 
+let suppressSpecsAccordion = false;
+function setupSpecsAccordion(){
+  const items = Array.from(document.querySelectorAll(".specs details.spec"));
+  if (!items.length) return;
+  items.forEach((d)=>{
+    d.addEventListener("toggle", ()=>{
+      if (suppressSpecsAccordion || !d.open) return;
+      items.forEach((other)=>{
+        if (other !== d) other.open = false;
+      });
+    });
+  });
+}
+
 $("btnReferral").addEventListener("click", ()=>setPatientType("referral"));
 $("btnExisting").addEventListener("click", ()=>setPatientType("existing"));
 
@@ -97,9 +111,9 @@ $("specToggleBtn").addEventListener("click", ()=>{
 });
 
 function setAllSpecsOpen(open){
-  document.querySelectorAll(".specs details.spec").forEach((d)=>{
-    d.open = !!open;
-  });
+  suppressSpecsAccordion = true;
+  document.querySelectorAll(".specs details.spec").forEach((d)=>{ d.open = !!open; });
+  suppressSpecsAccordion = false;
 }
 
 $("specCollapseAllBtn")?.addEventListener("click", ()=> setAllSpecsOpen(false));
@@ -109,6 +123,7 @@ try{
   initialSpecsCollapsed = localStorage.getItem("specsCollapsed") === "1";
 } catch {}
 setSpecsCollapsed(initialSpecsCollapsed);
+setupSpecsAccordion();
 
 // initial render
 renderAll();
